@@ -1,6 +1,8 @@
 package com.example.ramosguaman1shds;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    TextView Texto;
+     Button btnTex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +25,11 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Texto = findViewById(R.id.txtYo);
+        btnTex = findViewById(R.id.btnYo);
+
+        btnTex.setOnClickListener(v -> obtenerServicioWeb("http://172.21.192.1:3001/mensaje"));
     }
+    
 }
