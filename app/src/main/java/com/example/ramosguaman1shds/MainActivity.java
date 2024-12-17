@@ -29,8 +29,8 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView Texto;
-     Button btnTex, btnmil, btnsm;
+    TextView Texto ,txtsm;
+     Button btnTex, btnmil, btnsm, btns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,22 @@ public class MainActivity extends AppCompatActivity {
         btnTex = findViewById(R.id.btnYo);
         btnmil = findViewById(R.id.btnMil);
         btnsm = findViewById(R.id.btnSum);
+        txtsm = findViewById(R.id.txtSuma);
+        btns = findViewById(R.id.btnSuma);
 
         btnTex.setOnClickListener(v -> obtenerServicioWeb("http://10.10.33.47:3001/nombre"));
         btnmil.setOnClickListener(v -> obtenerServicioWeb2("http://10.10.33.47:3001/milton"));
         btnsm.setOnClickListener(v -> obtenerServicioWeb3("http://10.10.33.47:3001/suma"));
+        btns.setOnClickListener(v -> {
+            // Obtener el valor de txtsm y pasarlo como parámetro
+            String numero = txtsm.getText().toString().trim();
+            if (!numero.isEmpty()) {
+                obtenerServicioWeb4("http://10.10.33.47:3001/suma/" + numero);
+            } else {
+                Toast.makeText(getApplicationContext(), "Por favor ingresa un número", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
    private void obtenerServicioWeb (String url){
        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -119,5 +131,16 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void obtenerServicioWeb4(String url) {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                response -> Texto.setText("Resultado: " + response),
+                error -> Toast.makeText(getApplicationContext(), "Error: " + error.toString(), Toast.LENGTH_SHORT).show()
+        );
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
 }
+
+
 
