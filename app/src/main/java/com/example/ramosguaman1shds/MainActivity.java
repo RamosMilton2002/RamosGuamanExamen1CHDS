@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnTex.setOnClickListener(v -> obtenerServicioWeb("http://10.10.33.47:3001/nombre"));
         btnmil.setOnClickListener(v -> obtenerServicioWeb2("http://10.10.33.47:3001/milton"));
+        btnsm.setOnClickListener(v -> obtenerServicioWeb3("http://10.10.33.47:3001/suma"));
     }
    private void obtenerServicioWeb (String url){
        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -96,5 +97,27 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
-   }
+
+    private void obtenerServicioWeb3(String url) {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                response -> {
+                    // Mostrar directamente el resultado en el TextView
+                    Texto.setText("La suma es: " + response);
+                },
+                error -> {
+                    // Mostrar error si falla la solicitud
+                    Toast.makeText(getApplicationContext(), "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return new HashMap<>();
+            }
+        };
+
+        // Agregar la solicitud a la cola
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+}
 
